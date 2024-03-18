@@ -1,9 +1,9 @@
+import Header from './components/header/header-component'
 
-
-function App() {
+function App () {
   return (
-    <h1 >Hello World</h1>
-  );
+    <Header />
+  )
 }
 
-export default App;
+export default App
