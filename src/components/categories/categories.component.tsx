@@ -10,7 +10,7 @@ const Categories = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get(`${env.apiUrl}/api~/category`)
+      const { data } = await axios.get(`${env.apiUrl}/api/category`)
 
       setCategories(data)
     } catch (error) {
