@@ -18,7 +18,9 @@
       "react/react-in-jsx-scope": "off",
       "no-use-before-define": "off",
       "no-trailing-spaces": "off",
-      "padded-blocks": "off"
+      "padded-blocks": "off",
+      "space-before-blocks": "off",
+      "space-before-function-paren": "off"
 
     }
   }
