@@ -20,7 +20,8 @@
       "no-trailing-spaces": "off",
       "padded-blocks": "off",
       "space-before-blocks": "off",
-      "space-before-function-paren": "off"
+      "space-before-function-paren": "off",
+      "no-multiple-empty-lines": "off"
 
     }
   }
