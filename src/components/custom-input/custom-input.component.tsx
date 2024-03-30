@@ -8,7 +8,7 @@ const CustomInput: FunctionComponent<CustomInputProps> = ({
   hasError,
   ...rest
 }) => {
-  return <CustomInputContainer hasError={hasError} {...rest}/>
+  return <CustomInputContainer hasError={hasError} {...rest} />
 }
 
 export default CustomInput
