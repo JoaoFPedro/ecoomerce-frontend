@@ -20,6 +20,7 @@ export const LoginContent = styled.div`
   flex-direction: column;
   align-items: center;
   width: 450px;
+ 
 `
 
 export const LoginSubtitle = styled.p`
