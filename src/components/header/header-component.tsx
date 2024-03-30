@@ -6,7 +6,7 @@ import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './header.
 const Header = () => {
   return (
     <HeaderContainer>
-      <HeaderTitle>JONES CLOTHING</HeaderTitle>
+      <HeaderTitle>CLUB CLOTHING</HeaderTitle>
 
          <HeaderItems> 
        <HeaderItem >Explorar</HeaderItem>
