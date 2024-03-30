@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Category from '../../types/category.types'
 
-
 import CategoryItem from '../category-item/category-item.componente'
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../../config/firebase.config'
@@ -36,15 +35,13 @@ const Categories = () => {
   return (
     <CategoriesContainer>
       <CategoryContent>
-      
         {categories.map((category) => (
           <div key={category.id}>
             <CategoryItem category={category} />
           </div>
         ))}
-      
       </CategoryContent>
-      </CategoriesContainer>
+    </CategoriesContainer>
   )
 }
 
