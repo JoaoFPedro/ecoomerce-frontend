@@ -9,7 +9,10 @@ import {
 } from './sign-up.page.styles'
 import CustomButton from '../custom-button/custom-button.component'
 import { FiLogIn } from 'react-icons/fi'
-import validator from 'validator'
+
+interface SignUpForm{
+
+}
 
 const SignUpPage = () => {
   const {
@@ -31,10 +34,7 @@ const SignUpPage = () => {
             <p>Nome</p>
             <CustomInput
               {...register('name', {
-                required: true,
-                validate: (value) => {
-                  return validator.isEmail(value)
-                }
+                required: true
               })}
               hasError={!!errors?.name}
               placeholder='Digite seu nome '
@@ -42,7 +42,13 @@ const SignUpPage = () => {
           </SignUpInputContainer>
           <SignUpInputContainer>
             <p>Sobrenome</p>
-            <CustomInput placeholder='Digite seu sobrenome '></CustomInput>
+            <CustomInput
+              {...register('lastname', {
+                required: true
+              })}
+              placeholder='Digite seu sobrenome '
+              hasError={!!errors?.lastname}
+            ></CustomInput>
           </SignUpInputContainer>
           <SignUpInputContainer>
             <p>Email</p>
