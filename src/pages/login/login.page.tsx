@@ -19,12 +19,18 @@ import {
 } from './login.styles'
 import Header from '../../components/header/header-component'
 
+interface LoginForm{
+  email: string,
+  password: string
+
+}
+
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm()
+  } = useForm<LoginForm>()
 
   const handleSubmitPress = (data: any) => {
     console.log({ data })
