@@ -11,6 +11,9 @@ import CustomButton from '../custom-button/custom-button.component'
 import { FiLogIn } from 'react-icons/fi'
 import { isEmail } from 'validator'
 import InputErrorMessage from '../input-error-message/input-error-message.component'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../../config/firebase.config'
+import { addDoc, collection } from 'firebase/firestore'
 
 interface SignUpForm {
   name: string
@@ -28,8 +31,23 @@ const SignUpPage = () => {
     watch
   } = useForm<SignUpForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: SignUpForm) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      console.log({ userCredentials })
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        name: data.name,
+        lastName: data.lastName,
+        email: userCredentials.user.email
+      })
+    } catch (error) {
+      console.log(errors)
+    }
   }
   const watchPassword = watch('password')
   return (
@@ -44,7 +62,7 @@ const SignUpPage = () => {
               {...register('name', {
                 required: true
               })}
-              hasError={!!errors?.name}
+              haserror={!!errors?.name}
               placeholder='Digite seu nome '
             />{' '}
             {errors?.name?.type === 'required' && (
@@ -58,7 +76,7 @@ const SignUpPage = () => {
                 required: true
               })}
               placeholder='Digite seu sobrenome '
-              hasError={!!errors?.lastName}
+              haserror={!!errors?.lastName}
             />
             {errors?.lastName?.type === 'required' && (
               <InputErrorMessage>O Sobrenome é obrigatório.</InputErrorMessage>
@@ -74,7 +92,7 @@ const SignUpPage = () => {
                 }
               })}
               placeholder='Digite seu email '
-              hasError={!!errors?.email}
+              haserror={!!errors?.email}
             />
             {errors?.email?.type === 'required' && (
               <InputErrorMessage>O email é obrigatório.</InputErrorMessage>
@@ -88,7 +106,7 @@ const SignUpPage = () => {
               {...register('password', {
                 required: true
               })}
-              hasError={!!errors?.password}
+              haserror={!!errors?.password}
             />{' '}
             {errors?.password?.type === 'required' && (
               <InputErrorMessage> A senha é obrigatória.</InputErrorMessage>
@@ -105,7 +123,7 @@ const SignUpPage = () => {
                   return value === watchPassword
                 }
               })}
-              hasError={!!errors?.passwordConfirmation}
+              haserror={!!errors?.passwordConfirmation}
             />{' '}
             {errors?.passwordConfirmation?.type === 'validate' && (
               <InputErrorMessage>As senhas são diferentes.</InputErrorMessage>
