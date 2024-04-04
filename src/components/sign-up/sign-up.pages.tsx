@@ -24,12 +24,14 @@ const SignUpPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    watch
   } = useForm<SignUpForm>()
 
   const handleSubmitPress = (data: any) => {
     console.log({ data })
   }
+  const watchPassword = watch('password')
   return (
     <>
       <Header />
@@ -44,7 +46,8 @@ const SignUpPage = () => {
               })}
               hasError={!!errors?.name}
               placeholder='Digite seu nome '
-            /> {errors?.name?.type === 'required' && (
+            />{' '}
+            {errors?.name?.type === 'required' && (
               <InputErrorMessage>O nome é obrigatório</InputErrorMessage>
             )}
           </SignUpInputContainer>
@@ -86,7 +89,8 @@ const SignUpPage = () => {
                 required: true
               })}
               hasError={!!errors?.password}
-            /> {errors?.password?.type === 'required' && (
+            />{' '}
+            {errors?.password?.type === 'required' && (
               <InputErrorMessage> A senha é obrigatória.</InputErrorMessage>
             )}
           </SignUpInputContainer>
@@ -95,10 +99,16 @@ const SignUpPage = () => {
             <CustomInput
               type='password'
               placeholder='Digite sua senha novamente'
-              {...register('passwordConfirmation', { required: true })}
+              {...register('passwordConfirmation', {
+                required: true,
+                validate: (value) => {
+                  return value === watchPassword
+                }
+              })}
               hasError={!!errors?.passwordConfirmation}
-            /> {errors?.passwordConfirmation?.type === 'required' && (
-              <InputErrorMessage>Confirme sua senha.</InputErrorMessage>
+            />{' '}
+            {errors?.passwordConfirmation?.type === 'validate' && (
+              <InputErrorMessage>As senhas são diferentes.</InputErrorMessage>
             )}
           </SignUpInputContainer>
           <CustomButton
