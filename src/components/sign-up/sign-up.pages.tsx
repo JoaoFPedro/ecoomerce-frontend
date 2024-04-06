@@ -128,9 +128,11 @@ const SignUpPage = () => {
             {errors?.password?.type === 'required' && (
               <InputErrorMessage> A senha é obrigatória.</InputErrorMessage>
             )}
-              {errors?.password?.type === 'passwordWeek' && (
-              <InputErrorMessage>A senha deve conter mais de 6 caracteres.</InputErrorMessage>
-              )}
+            {errors?.password?.type === 'passwordWeek' && (
+              <InputErrorMessage>
+                A senha deve conter mais de 6 caracteres.
+              </InputErrorMessage>
+            )}
           </SignUpInputContainer>
           <SignUpInputContainer>
             <p>Confirmar Senha</p>
