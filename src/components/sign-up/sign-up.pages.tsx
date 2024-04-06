@@ -11,7 +11,11 @@ import CustomButton from '../custom-button/custom-button.component'
 import { FiLogIn } from 'react-icons/fi'
 import { isEmail } from 'validator'
 import InputErrorMessage from '../input-error-message/input-error-message.component'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  AuthError,
+  AuthErrorCodes,
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
 import { auth, db } from '../../config/firebase.config'
 import { addDoc, collection } from 'firebase/firestore'
 
@@ -28,7 +32,8 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
+    setError
   } = useForm<SignUpForm>()
 
   const handleSubmitPress = async (data: SignUpForm) => {
@@ -46,7 +51,15 @@ const SignUpPage = () => {
         email: userCredentials.user.email
       })
     } catch (error) {
-      console.log(errors)
+      console.log(error)
+      const _error = error as AuthError
+
+      if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        return setError('email', { type: 'alreadyExist' })
+      }
+      if (_error.code === AuthErrorCodes.WEAK_PASSWORD) {
+        return setError('password', { type: 'passwordWeek' })
+      }
     }
   }
   const watchPassword = watch('password')
@@ -97,6 +110,10 @@ const SignUpPage = () => {
             {errors?.email?.type === 'required' && (
               <InputErrorMessage>O email é obrigatório.</InputErrorMessage>
             )}
+
+            {errors?.email?.type === 'alreadyExist' && (
+              <InputErrorMessage>Email ja existente.</InputErrorMessage>
+            )}
           </SignUpInputContainer>
           <SignUpInputContainer>
             <p>Senha</p>
@@ -111,6 +128,9 @@ const SignUpPage = () => {
             {errors?.password?.type === 'required' && (
               <InputErrorMessage> A senha é obrigatória.</InputErrorMessage>
             )}
+              {errors?.password?.type === 'passwordWeek' && (
+              <InputErrorMessage>A senha deve conter mais de 6 caracteres.</InputErrorMessage>
+              )}
           </SignUpInputContainer>
           <SignUpInputContainer>
             <p>Confirmar Senha</p>
@@ -126,7 +146,7 @@ const SignUpPage = () => {
               haserror={!!errors?.passwordConfirmation}
             />{' '}
             {errors?.passwordConfirmation?.type === 'validate' && (
-              <InputErrorMessage>As senhas são diferentes.</InputErrorMessage>
+              <InputErrorMessage>As senhas nao coincidem.</InputErrorMessage>
             )}
           </SignUpInputContainer>
           <CustomButton
