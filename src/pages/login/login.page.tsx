@@ -18,22 +18,46 @@ import {
   LoginSubtitle
 } from './login.styles'
 import Header from '../../components/header/header-component'
+import { auth } from '../../config/firebase.config'
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword
+} from 'firebase/auth'
 
-interface LoginForm{
-  email: string,
+interface LoginForm {
+  email: string
   password: string
-
 }
 
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setError
   } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+      console.log({ userCredentials })
+    } catch (error) {
+      const _error = error as AuthError
+
+      console.log(_error)
+
+      if (_error.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
+        setError('email', { type: 'invalidEmail' })
+      }
+      if (_error.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
+        setError('password', { type: 'invalidPassword' })
+      }
+    }
   }
 
   return (
@@ -72,6 +96,9 @@ const LoginPage = () => {
                 Por favor, insira um e-mail válido.
               </InputErrorMessage>
             )}
+            {errors?.email?.type === 'invalidEmail' && (
+              <InputErrorMessage>Email ou senha inválidos.</InputErrorMessage>
+            )}
           </LoginInputContainer>
 
           <LoginInputContainer>
@@ -85,6 +112,9 @@ const LoginPage = () => {
 
             {errors?.password?.type === 'required' && (
               <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
+            )}
+            {errors?.password?.type === 'invalidPassword' && (
+              <InputErrorMessage>Email ou senha inválidos.</InputErrorMessage>
             )}
           </LoginInputContainer>
 
