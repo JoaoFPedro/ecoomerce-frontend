@@ -4,7 +4,7 @@ import Category from '../../types/category.types'
 import CategoryItem from '../category-item/category-item.componente'
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../../config/firebase.config'
-import { categoryConverter } from '../../converts/firebase.converts'
+import { categoryConverter } from '../../converts/firestore.converts'
 import { CategoriesContainer, CategoryContent } from './categories.styles'
 
 const Categories = () => {
