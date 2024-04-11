@@ -26,9 +26,10 @@ import {
   signInWithPopup
 } from 'firebase/auth'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { userContext } from '../../contexts/user.context'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../../components/loading/loading.component'
 
 interface LoginForm {
   email: string
@@ -44,7 +45,10 @@ const LoginPage = () => {
   } = useForm<LoginForm>()
 
   const { isAuthenticated } = useContext(userContext)
+
   const navigate = useNavigate()
+
+  const [isLoading, setIsloading] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -54,6 +58,7 @@ const LoginPage = () => {
 
   const handleSubmitPress = async (data: LoginForm) => {
     try {
+      setIsloading(true)
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         data.email,
@@ -71,11 +76,14 @@ const LoginPage = () => {
       if (_error.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
         setError('password', { type: 'invalidPassword' })
       }
+    } finally {
+      setIsloading(false)
     }
   }
 
   const handleSignInWithGoogle = async () => {
     try {
+      setIsloading(true)
       const userCredentials = await signInWithPopup(auth, googleProvider)
 
       const querySnapshot = await getDocs(
@@ -103,12 +111,16 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsloading(false)
     }
   }
 
   return (
     <>
       <Header />
+
+      {isLoading && <Loading />}
 
       <LoginContainer>
         <LoginContent>
