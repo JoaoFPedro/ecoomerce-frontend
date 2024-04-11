@@ -26,10 +26,13 @@ const Header = () => {
   const handleSignUpClick = () => {
     navigate('/sign-up')
   }
+  const handleLogClick = () => {
+    navigate('/')
+  }
 
   return (
     <HeaderContainer>
-      <HeaderTitle>CLUB CLOTHING</HeaderTitle>
+      <HeaderTitle onClick={handleLogClick}>CLUB CLOTHING</HeaderTitle>
 
       <HeaderItems>
         <HeaderItem>Explorar</HeaderItem>
