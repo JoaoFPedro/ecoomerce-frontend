@@ -26,6 +26,9 @@ import {
   signInWithPopup
 } from 'firebase/auth'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import { useContext, useEffect } from 'react'
+import { userContext } from '../../contexts/user.context'
+import { useNavigate } from 'react-router-dom'
 
 interface LoginForm {
   email: string
@@ -39,6 +42,15 @@ const LoginPage = () => {
     formState: { errors },
     setError
   } = useForm<LoginForm>()
+
+  const { isAuthenticated } = useContext(userContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  })
 
   const handleSubmitPress = async (data: LoginForm) => {
     try {
