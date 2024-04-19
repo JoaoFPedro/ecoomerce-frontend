@@ -38,8 +38,9 @@ const Header = () => {
       <HeaderTitle onClick={handleLogClick}>CLUB CLOTHING</HeaderTitle>
 
       <HeaderItems>
-        <HeaderItem onClick={handleExploreClick}>Explorar</HeaderItem>
+       
         <HeaderItem onClick={handleHomeClick}>Home</HeaderItem>
+        <HeaderItem onClick={handleExploreClick}>Explorar</HeaderItem>
         {!isAuthenticated && (
           <>
             <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
