@@ -3,7 +3,7 @@ import Colors from '../../themes/theme.colors'
 
 
 interface CartContainerPros {
-  isVisible: boolean
+  isvisible: boolean
 }
 
 export const CartContainer = styled.div<CartContainerPros>`
@@ -17,8 +17,8 @@ export const CartContainer = styled.div<CartContainerPros>`
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: flex-end;
-  visibility: ${(props) => (props.isVisible ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.isVisible ? '1' : '0')};
+  visibility: ${(props) => (props.isvisible ? 'visible' : 'hidden')};
+  opacity: ${(props) => (props.isvisible ? '1' : '0')};
   transition: all 0.3s ease;
 
   p {

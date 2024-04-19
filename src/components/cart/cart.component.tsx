@@ -11,9 +11,9 @@ import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context'
 
 const Cart = () => {
-  const { isVisible, toggleCart } = useContext(CartContext)
+  const { isvisible, toggleCart } = useContext(CartContext)
   return (
-    <CartContainer isVisible={isVisible}>
+    <CartContainer isvisible={isvisible}>
       <CartEscapeArea onClick={toggleCart} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
