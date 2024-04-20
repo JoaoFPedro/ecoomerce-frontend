@@ -30,6 +30,21 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
   }
 
   const addProductToCart = (product: Product) => {
+    // Check if product is already in the Cart
+    const productIsAlreadyInCart = products.some(
+      (item) => item.id === product.id
+    )
+
+    if (productIsAlreadyInCart) {
+      return setProducts((prevState) =>
+        prevState.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      )
+    }
+
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
   }
 
