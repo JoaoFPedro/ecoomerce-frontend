@@ -1,10 +1,18 @@
-import { FunctionComponent, createContext, useState } from 'react'
+import {
+  FunctionComponent,
+  createContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import CartProduct from '../types/cart.types'
 import Product from '../types/products.types'
 
 interface ICartContext {
   isvisible: boolean
   products: CartProduct[]
+  productsTotalPrice: number
+  productsCart: number
   toggleCart: () => void
   addProductToCart: (product: Product) => void
   removeProductFromCart: (productId: string) => void
@@ -22,7 +30,9 @@ export const CartContext = createContext<ICartContext>({
   addProductToCart: () => {},
   removeProductFromCart: () => {},
   increaseProductQuantity: () => {},
-  decreaseProductQuantity: () => {}
+  decreaseProductQuantity: () => {},
+  productsTotalPrice: 0,
+  productsCart: 0
 })
 
 const CartContextProvider: FunctionComponent<ChildrenProps> = ({
@@ -30,6 +40,30 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
 }) => {
   const [isvisible, setIsVisible] = useState(false)
   const [products, setProducts] = useState<CartProduct[]>([])
+
+  useEffect(() => {
+    const productsFromLocalStorage = JSON.parse(
+      localStorage.getItem('cartProducts')!
+    )
+
+    setProducts(productsFromLocalStorage)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('cartProducts', JSON.stringify(products))
+  }, [products])
+
+  const productsTotalPrice = useMemo(() => {
+    return products.reduce((acc, currentProduct) => {
+      return acc + currentProduct.price * currentProduct.quantity
+    }, 0)
+  }, [products])
+
+  const productsCart = useMemo(() => {
+    return products.reduce((acc, currentProduct) => {
+      return acc + currentProduct.quantity
+    }, 0)
+  }, [products])
 
   const toggleCart = () => {
     setIsVisible((prevState) => !prevState)
@@ -88,7 +122,9 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
         addProductToCart,
         removeProductFromCart,
         increaseProductQuantity,
-        decreaseProductQuantity
+        decreaseProductQuantity,
+        productsTotalPrice,
+        productsCart
       }}
     >
       {children}
