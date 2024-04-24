@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from 'react'
+import { FunctionComponent, useContext, useState } from 'react'
 import { CartContext } from '../../contexts/cart.context'
 import {
   CheckoutContainer,
@@ -9,34 +9,63 @@ import {
 import CartItem from '../cart-item/cart.item.component'
 import CustomButton from '../custom-button/custom-button.component'
 import { BsBagCheck } from 'react-icons/bs'
+import axios from 'axios'
+
+import Loading from '../loading/loading.component'
 
 const CheckOut: FunctionComponent = () => {
   const { products, productsTotalPrice } = useContext(CartContext)
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleFinishPurchaseClick = async () => {
+    try {
+      setIsLoading(true)
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}/create-checkout-session`,
+        {
+          products
+        }
+      )
+
+      window.location.href = data.url
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
-    <CheckoutContainer>
-      <CheckoutTitle>CheckOut</CheckoutTitle>
+    <>
+      {isLoading && <Loading />}
 
-      {products.length > 0 ? (
-        <>
-          <CheckoutProducts>
-            {products.map((product) => (
-              <CartItem key={product.id} product={product} />
-            ))}
-          </CheckoutProducts>
+      <CheckoutContainer>
+        <CheckoutTitle>CheckOut</CheckoutTitle>
 
-          <CheckoutTotal>
-            <p>R$ {productsTotalPrice}</p>
-          </CheckoutTotal>
+        {products.length > 0 ? (
+          <>
+            <CheckoutProducts>
+              {products.map((product) => (
+                <CartItem key={product.id} product={product} />
+              ))}
+            </CheckoutProducts>
 
-          <CustomButton startIcon={<BsBagCheck />}>
-            Finalizar Compra
-          </CustomButton>
-        </>
-      ) : (
-        <p> Seu carrinho esta vazio!</p>
-      )}
-    </CheckoutContainer>
+            <CheckoutTotal>
+              <p>R$ {productsTotalPrice}</p>
+            </CheckoutTotal>
+
+            <CustomButton
+              startIcon={<BsBagCheck />}
+              onClick={handleFinishPurchaseClick}
+            >
+              Finalizar Compra
+            </CustomButton>
+          </>
+        ) : (
+          <p> Seu carrinho esta vazio!</p>
+        )}
+      </CheckoutContainer>
+    </>
   )
 }
 
