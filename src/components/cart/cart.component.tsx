@@ -10,29 +10,39 @@ import {
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context'
 import CartItem from '../cart-item/cart.item.component'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
-  const { isvisible, toggleCart, products, productsTotalPrice, productsCart } = useContext(CartContext)
+  const { isvisible, toggleCart, products, productsTotalPrice, productsCart } =
+    useContext(CartContext)
+  const navigate = useNavigate()
+
+  const handleCheckOutPageClick = () => {
+    navigate('/checkout')
+    toggleCart()
+  }
   return (
     <CartContainer isvisible={isvisible}>
       <CartEscapeArea onClick={toggleCart} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
 
-        {products.map(product => <CartItem key={product.id} product={product} />)}
+        {products.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))}
+
+        {productsCart > 0 && <CartTotal>R${productsTotalPrice}</CartTotal>}
 
         {productsCart > 0 && (
-          <CartTotal>R${productsTotalPrice}</CartTotal>
-        ) }
-        
+          <CustomButton
+            startIcon={<BsCartCheck />}
+            onClick={handleCheckOutPageClick}
+          >
+            Fazer Checkout
+          </CustomButton>
+        )}
 
-       {productsCart > 0 && (
-         <CustomButton startIcon={<BsCartCheck />}>Fazer Checkout</CustomButton>
-       )}
-
-       {productsCart === 0 && (
-        <p>Nenhum item no carrinho!</p>
-       )}
+        {productsCart === 0 && <p>Nenhum item no carrinho!</p>}
       </CartContent>
     </CartContainer>
   )
