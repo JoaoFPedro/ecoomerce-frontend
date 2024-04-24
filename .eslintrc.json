@@ -21,7 +21,8 @@
       "padded-blocks": "off",
       "space-before-blocks": "off",
       "space-before-function-paren": "off",
-      "no-multiple-empty-lines": "off"
+      "no-multiple-empty-lines": "off",
+      "multiline-ternary": "off"
 
     }
   }
