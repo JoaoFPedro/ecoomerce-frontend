@@ -20,7 +20,8 @@ interface ICartContext {
   decreaseProductQuantity: (productId: string) => void
 }
 interface ChildrenProps {
-  children: any
+  // eslint-disable-next-line no-undef
+  children: React.ReactNode
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -46,7 +47,10 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
       localStorage.getItem('cartProducts')!
     )
 
-    setProducts(productsFromLocalStorage)
+    if (productsFromLocalStorage.length > 0) {
+      setProducts(productsFromLocalStorage)
+      console.log(productsFromLocalStorage)
+    }
   }, [])
 
   useEffect(() => {
