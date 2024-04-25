@@ -10,12 +10,22 @@ import { useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../config/firebase.config'
 import { useContext } from 'react'
-import { userContext } from '../../contexts/user.context'
+
 import { CartContext } from '../../contexts/cart.context'
 
+import { useSelector, useDispatch } from 'react-redux'
+
+
 const Header = () => {
-  const { isAuthenticated } = useContext(userContext)
+  // const { isAuthenticated } = useContext(userContext)
+
   const { toggleCart, productsCart } = useContext(CartContext)
+
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
+
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
@@ -34,6 +44,11 @@ const Header = () => {
   const handleExploreClick = () => {
     navigate('/explore')
   }
+  const handleSignOutClick = () => {
+    dispatch({ type: 'LOGOUT_USER' })
+    signOut(auth)
+    navigate('/login')
+  }
 
   return (
     <HeaderContainer>
@@ -50,7 +65,7 @@ const Header = () => {
         )}
         {isAuthenticated && (
           <>
-            <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+            <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
           </>
         )}
         <HeaderItem onClick={toggleCart}>

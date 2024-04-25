@@ -1,6 +1,8 @@
-import { createStore } from 'redux'
-import rootReducer from './root-reducers'
 
-const store = createStore(rootReducer)
+import { legacy_createStore as createStore, applyMiddleware } from 'redux'
+import rootReducer from './root-reducers'
+import logger from 'redux-logger'
+
+const store = createStore(rootReducer, applyMiddleware(logger))
 
 export default store

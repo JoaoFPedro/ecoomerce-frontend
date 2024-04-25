@@ -2,10 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/home/home.page'
 import LoginPage from './pages/login/login.page'
 import SignUpPage from './components/sign-up/sign-up.pages'
-import { FunctionComponent, useContext, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from './config/firebase.config'
-import { userContext } from './contexts/user.context'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { userConverter } from './converts/firestore.converts'
 import Loading from './components/loading/loading.component'
@@ -15,38 +14,55 @@ import Cart from './components/cart/cart.component'
 import CheckOutPage from './pages/checkout/checkout.page'
 import Authentication from './guards/authenticaton.component'
 import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
+import { useDispatch, useSelector } from 'react-redux'
+
+/*
+  The commented script refer to using the Context API that was replaced by using the Redux
+*/
 
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
 
-  const { isAuthenticated, loginUser, logoutUser } = useContext(userContext)
+  const dispatch = useDispatch()
 
-  onAuthStateChanged(auth, async (user) => {
-    const isSigningOut = isAuthenticated && !user
+  // const { isAuthenticated, loginUser, logoutUser } = useContext(userContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
 
-    if (isSigningOut) {
-      logoutUser()
-      return setIsInitializing(false)
-    }
-
-    const isSigningIn = !isAuthenticated && user
-    if (isSigningIn) {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, 'users').withConverter(userConverter),
-          where('id', '==', user.uid)
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      const isSigningOut = isAuthenticated && !user
+  
+      if (isSigningOut) {
+        // logoutUser()
+  
+        dispatch({ type: 'LOGOUT_USER' })
+  
+        return setIsInitializing(false)
+      }
+  
+      const isSigningIn = !isAuthenticated && user
+      if (isSigningIn) {
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'users').withConverter(userConverter),
+            where('id', '==', user.uid)
+          )
         )
-      )
-      const userFromFirestore = querySnapshot.docs[0]?.data()
-      loginUser(userFromFirestore)
-
+        const userFromFirestore = querySnapshot.docs[0]?.data()
+        // loginUser(userFromFirestore)
+  
+        dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
+  
+        return setIsInitializing(false)
+      }
       return setIsInitializing(false)
-    }
-    return setIsInitializing(false)
-  })
+    })
+  }, [dispatch])
   if (isInitializing) return <Loading />
 
-  console.log({ isAuthenticated })
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -54,8 +70,15 @@ const App: FunctionComponent = () => {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/sign-up' element={<SignUpPage />}></Route>
         <Route path='/explore' element={<ExplorePage />} />
-        <Route path='/category-details/:id' element={<CategoryDetailsPage/>} />
-        <Route path='/checkout' element={<Authentication><CheckOutPage></CheckOutPage></Authentication>} />
+        <Route path='/category-details/:id' element={<CategoryDetailsPage />} />
+        <Route
+          path='/checkout'
+          element={
+            <Authentication>
+              <CheckOutPage></CheckOutPage>
+            </Authentication>
+          }
+        />
         <Route path='/payment-confirmation' element={<PaymentConfirmation />} />
       </Routes>
 

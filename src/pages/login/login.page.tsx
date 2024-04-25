@@ -26,10 +26,11 @@ import {
   signInWithPopup
 } from 'firebase/auth'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
-import { useContext, useEffect, useState } from 'react'
-import { userContext } from '../../contexts/user.context'
+import { useEffect, useState } from 'react'
+
 import { useNavigate } from 'react-router-dom'
 import Loading from '../../components/loading/loading.component'
+import { useSelector } from 'react-redux'
 
 interface LoginForm {
   email: string
@@ -44,7 +45,11 @@ const LoginPage = () => {
     setError
   } = useForm<LoginForm>()
 
-  const { isAuthenticated } = useContext(userContext)
+  // const { isAuthenticated } = useContext(userContext)
+
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
 
   const navigate = useNavigate()
 
