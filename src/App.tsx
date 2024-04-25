@@ -14,6 +14,7 @@ import CategoryDetailsPage from './pages/category-details/category.details.page'
 import Cart from './components/cart/cart.component'
 import CheckOutPage from './pages/checkout/checkout.page'
 import Authentication from './guards/authenticaton.component'
+import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
 
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
@@ -55,6 +56,7 @@ const App: FunctionComponent = () => {
         <Route path='/explore' element={<ExplorePage />} />
         <Route path='/category-details/:id' element={<CategoryDetailsPage/>} />
         <Route path='/checkout' element={<Authentication><CheckOutPage></CheckOutPage></Authentication>} />
+        <Route path='/payment-confirmation' element={<PaymentConfirmation />} />
       </Routes>
 
       <Cart />

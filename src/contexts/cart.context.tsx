@@ -18,6 +18,7 @@ interface ICartContext {
   removeProductFromCart: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
+  clearProduct: () => void
 }
 interface ChildrenProps {
   // eslint-disable-next-line no-undef
@@ -33,7 +34,8 @@ export const CartContext = createContext<ICartContext>({
   increaseProductQuantity: () => {},
   decreaseProductQuantity: () => {},
   productsTotalPrice: 0,
-  productsCart: 0
+  productsCart: 0,
+  clearProduct: () => {}
 })
 
 const CartContextProvider: FunctionComponent<ChildrenProps> = ({
@@ -117,6 +119,10 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
     )
   }
 
+  const clearProduct = () => {
+    setProducts([])
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -128,7 +134,8 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
         increaseProductQuantity,
         decreaseProductQuantity,
         productsTotalPrice,
-        productsCart
+        productsCart,
+        clearProduct
       }}
     >
       {children}
