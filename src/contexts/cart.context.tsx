@@ -51,7 +51,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
 
     if (productsFromLocalStorage.length > 0) {
       setProducts(productsFromLocalStorage)
-      console.log(productsFromLocalStorage)
+      
     }
   }, [])
 
