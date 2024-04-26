@@ -18,10 +18,11 @@ import {
 } from 'firebase/auth'
 import { auth, db } from '../../config/firebase.config'
 import { addDoc, collection } from 'firebase/firestore'
-import { useContext, useEffect, useState } from 'react'
-import { userContext } from '../../contexts/user.context'
+import { useEffect, useState } from 'react'
+
 import { useNavigate } from 'react-router-dom'
 import Loading from '../loading/loading.component'
+import { useSelector } from 'react-redux'
 
 interface SignUpForm {
   name: string
@@ -41,7 +42,10 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password')
 
-  const { isAuthenticated } = useContext(userContext)
+  // const { isAuthenticated } = useContext(userContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
 
   const [isLoading, setIsLoading] = useState(false)
 
