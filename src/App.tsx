@@ -33,15 +33,15 @@ const App: FunctionComponent = () => {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       const isSigningOut = isAuthenticated && !user
-  
+
       if (isSigningOut) {
         // logoutUser()
-  
+
         dispatch({ type: 'LOGOUT_USER' })
-  
+
         return setIsInitializing(false)
       }
-  
+
       const isSigningIn = !isAuthenticated && user
       if (isSigningIn) {
         const querySnapshot = await getDocs(
@@ -52,9 +52,9 @@ const App: FunctionComponent = () => {
         )
         const userFromFirestore = querySnapshot.docs[0]?.data()
         // loginUser(userFromFirestore)
-  
+
         dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
-  
+
         return setIsInitializing(false)
       }
       return setIsInitializing(false)
@@ -62,7 +62,6 @@ const App: FunctionComponent = () => {
   }, [dispatch])
   if (isInitializing) return <Loading />
 
-  
   return (
     <BrowserRouter>
       <Routes>
