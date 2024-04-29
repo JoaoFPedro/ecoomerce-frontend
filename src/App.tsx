@@ -15,6 +15,7 @@ import CheckOutPage from './pages/checkout/checkout.page'
 import Authentication from './guards/authenticaton.component'
 import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
 import { useDispatch, useSelector } from 'react-redux'
+import { logOutUser, loginUser } from './store/reducers/user/user.actions'
 
 /*
   The commented script refer to using the Context API that was replaced by using the Redux
@@ -37,7 +38,7 @@ const App: FunctionComponent = () => {
       if (isSigningOut) {
         // logoutUser()
 
-        dispatch({ type: 'LOGOUT_USER' })
+        dispatch(logOutUser())
 
         return setIsInitializing(false)
       }
@@ -53,7 +54,7 @@ const App: FunctionComponent = () => {
         const userFromFirestore = querySnapshot.docs[0]?.data()
         // loginUser(userFromFirestore)
 
-        dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
+        dispatch(loginUser(userFromFirestore))
 
         return setIsInitializing(false)
       }

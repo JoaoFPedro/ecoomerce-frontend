@@ -14,6 +14,7 @@ import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context'
 
 import { useSelector, useDispatch } from 'react-redux'
+import { logOutUser } from '../../store/reducers/user/user.actions'
 
 
 const Header = () => {
@@ -45,7 +46,7 @@ const Header = () => {
     navigate('/explore')
   }
   const handleSignOutClick = () => {
-    dispatch({ type: 'LOGOUT_USER' })
+    dispatch(logOutUser())
     signOut(auth)
     navigate('/login')
   }
