@@ -26,7 +26,7 @@ const Header = () => {
     (rootReducer: any) => rootReducer.userReducer
   )
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   const navigate = useNavigate()
 
