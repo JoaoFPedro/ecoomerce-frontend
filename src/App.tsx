@@ -15,7 +15,7 @@ import CheckOutPage from './pages/checkout/checkout.page'
 import Authentication from './guards/authenticaton.component'
 import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
 import { useDispatch, useSelector } from 'react-redux'
-import { logOutUser, loginUser } from './store/reducers/user/user.actions'
+import { logOutUser, loginUser } from './store/reducers/user/user.actions' // Importe UnknownAction
 
 /*
   The commented script refer to using the Context API that was replaced by using the Redux
@@ -24,7 +24,7 @@ import { logOutUser, loginUser } from './store/reducers/user/user.actions'
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   // const { isAuthenticated, loginUser, logoutUser } = useContext(userContext)
   const { isAuthenticated } = useSelector(
