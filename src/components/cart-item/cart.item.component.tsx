@@ -37,6 +37,9 @@ const CartItem: FunctionComponent<CartItemProps> = ({ product }) => {
       clearProduct()
     }
   }
+  if (product.quantity === 0) {
+    clearProduct()
+  }
   return (
     <CartItemContainer>
       <CartItemImage imageUrl={product.imageUrl} />
