@@ -5,7 +5,7 @@ import logger from 'redux-logger'
 
 
 
-const store = createStore(rootReducer, applyMiddleware(logger))
+const store = createStore(rootReducer, undefined, applyMiddleware(logger))
 
 export type RootState = ReturnType<typeof store.getState>
 
