@@ -14,8 +14,9 @@ import Cart from './components/cart/cart.component'
 import CheckOutPage from './pages/checkout/checkout.page'
 import Authentication from './guards/authenticaton.component'
 import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { logOutUser, loginUser } from './store/reducers/user/user.actions' // Importe UnknownAction
+import { useAppSelector } from './hooks/redux.hook'
 
 /*
   The commented script refer to using the Context API that was replaced by using the Redux
@@ -27,8 +28,8 @@ const App: FunctionComponent = () => {
   const dispatch = useDispatch<any>()
 
   // const { isAuthenticated, loginUser, logoutUser } = useContext(userContext)
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
 
   useEffect(() => {

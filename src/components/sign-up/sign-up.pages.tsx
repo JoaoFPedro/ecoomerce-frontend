@@ -22,7 +22,9 @@ import { useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import Loading from '../loading/loading.component'
-import { useSelector } from 'react-redux'
+
+import { useAppSelector } from '../../hooks/redux.hook'
+
 
 interface SignUpForm {
   name: string
@@ -42,9 +44,13 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password')
 
-  // const { isAuthenticated } = useContext(userContext)
+  /* const { isAuthenticated } = useContext(userContext)
   const { isAuthenticated } = useSelector(
     (rootReducer: any) => rootReducer.userReducer
+  )
+  */
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   )
 
   const [isLoading, setIsLoading] = useState(false)
