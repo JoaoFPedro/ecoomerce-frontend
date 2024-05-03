@@ -15,12 +15,12 @@ import { CartContext } from '../../contexts/cart.context'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { logOutUser } from '../../store/reducers/user/user.actions'
-
+import { toggleCart } from '../../store/reducers/cart/cart.actions'
 
 const Header = () => {
   // const { isAuthenticated } = useContext(userContext)
 
-  const { toggleCart, productsCart } = useContext(CartContext)
+  const { productsCart /* toggleCart */ } = useContext(CartContext)
 
   const { isAuthenticated } = useSelector(
     (rootReducer: any) => rootReducer.userReducer
@@ -50,6 +50,9 @@ const Header = () => {
     signOut(auth)
     navigate('/login')
   }
+  const handleCartClick = () => {
+    dispatch(toggleCart())
+  }
 
   return (
     <HeaderContainer>
@@ -69,7 +72,7 @@ const Header = () => {
             <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
           </>
         )}
-        <HeaderItem onClick={toggleCart}>
+        <HeaderItem onClick={handleCartClick}>
           <BsCart3 size={25} />
           <p style={{ marginLeft: 5 }}>{productsCart}</p>
         </HeaderItem>
