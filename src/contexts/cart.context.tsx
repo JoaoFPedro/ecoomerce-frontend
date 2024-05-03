@@ -6,7 +6,7 @@ import {
   useState
 } from 'react'
 import CartProduct from '../types/cart.types'
-import Product from '../types/products.types'
+
 
 interface ICartContext {
   isvisible: boolean
@@ -14,7 +14,7 @@ interface ICartContext {
   productsTotalPrice: number
   productsCart: number
   toggleCart: () => void
-  addProductToCart: (product: Product) => void
+  //  addProductToCart: (product: Product) => void
   removeProductFromCart: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
@@ -29,7 +29,7 @@ export const CartContext = createContext<ICartContext>({
   isvisible: false,
   products: [],
   toggleCart: () => {},
-  addProductToCart: () => {},
+  // addProductToCart: () => {},
   removeProductFromCart: () => {},
   increaseProductQuantity: () => {},
   decreaseProductQuantity: () => {},
@@ -74,6 +74,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
     setIsVisible((prevState) => !prevState)
   }
 
+  /*
   const addProductToCart = (product: Product) => {
     // Check if product is already in the Cart
     const productIsAlreadyInCart = products.some(
@@ -92,7 +93,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
 
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
   }
-
+*/
   const removeProductFromCart = (productId: string) => {
     setProducts((products) =>
       products.filter((product) => product.id !== productId)
@@ -128,7 +129,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
         isvisible,
         products,
         toggleCart,
-        addProductToCart,
+        // addProductToCart,
         removeProductFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,

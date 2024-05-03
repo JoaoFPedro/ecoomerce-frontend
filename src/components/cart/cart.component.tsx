@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux'
 
 const Cart = () => {
   const {
-    /* isvisible,  toggleCart, */ products,
+    /* isvisible,  toggleCart, products */ 
     productsTotalPrice,
     productsCart
   } = useContext(CartContext)
@@ -25,7 +25,7 @@ const Cart = () => {
 
   const dispatch = useDispatch()
 
-  const { isVisible } = useAppSelector((state) => state.cartReducer)
+  const { isVisible, products } = useAppSelector((state) => state.cartReducer)
 
   const handleCheckOutPageClick = () => {
     navigate('/checkout')
