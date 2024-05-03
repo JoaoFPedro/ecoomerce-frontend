@@ -7,25 +7,32 @@ import {
   CartTitle,
   CartTotal
 } from './cart.styles'
-import { useContext } from 'react'
-import { CartContext } from '../../contexts/cart.context'
+
 import CartItem from '../cart-item/cart.item.component'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hook'
 import { toggleCart } from '../../store/reducers/cart/cart.actions'
 import { useDispatch } from 'react-redux'
+import {
+  selectProductsCount,
+  selectProductsTotalPrice
+} from '../../store/reducers/cart/cart.selector'
 
 const Cart = () => {
-  const {
-    /* isvisible,  toggleCart, products */ 
-    productsTotalPrice,
+  /* const {
+     isvisible,  toggleCart, products  
+    productsTotalPrice, 
     productsCart
-  } = useContext(CartContext)
+  } = useContext(CartContext) */
+
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
 
   const { isVisible, products } = useAppSelector((state) => state.cartReducer)
+
+  const productsTotalPrice = useAppSelector(selectProductsTotalPrice)
+  const productsCart = useAppSelector(selectProductsCount)
 
   const handleCheckOutPageClick = () => {
     navigate('/checkout')
