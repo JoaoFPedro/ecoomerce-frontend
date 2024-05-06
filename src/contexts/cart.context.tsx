@@ -7,7 +7,6 @@ import {
 } from 'react'
 import CartProduct from '../types/cart.types'
 
-
 interface ICartContext {
   isvisible: boolean
   products: CartProduct[]
@@ -15,7 +14,7 @@ interface ICartContext {
   productsCart: number
   toggleCart: () => void
   //  addProductToCart: (product: Product) => void
-  removeProductFromCart: (productId: string) => void
+  // removeProductFromCart: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
   clearProduct: () => void
@@ -30,7 +29,7 @@ export const CartContext = createContext<ICartContext>({
   products: [],
   toggleCart: () => {},
   // addProductToCart: () => {},
-  removeProductFromCart: () => {},
+  // removeProductFromCart: () => {},
   increaseProductQuantity: () => {},
   decreaseProductQuantity: () => {},
   productsTotalPrice: 0,
@@ -93,12 +92,13 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
 
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
   }
-*/
+
   const removeProductFromCart = (productId: string) => {
     setProducts((products) =>
       products.filter((product) => product.id !== productId)
     )
   }
+  */
   const increaseProductQuantity = (productId: string) => {
     setProducts((products) =>
       products.map((product) =>
@@ -130,7 +130,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
         products,
         toggleCart,
         // addProductToCart,
-        removeProductFromCart,
+        // removeProductFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,
         productsTotalPrice,
