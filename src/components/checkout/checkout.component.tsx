@@ -1,5 +1,5 @@
-import { FunctionComponent, useContext, useState } from 'react'
-import { CartContext } from '../../contexts/cart.context'
+import { FunctionComponent, useState } from 'react'
+
 import {
   CheckoutContainer,
   CheckoutProducts,
@@ -12,9 +12,14 @@ import { BsBagCheck } from 'react-icons/bs'
 import axios from 'axios'
 
 import Loading from '../loading/loading.component'
+import { useAppSelector } from '../../hooks/redux.hook'
+import { selectProductsTotalPrice } from '../../store/reducers/cart/cart.selector'
 
 const CheckOut: FunctionComponent = () => {
-  const { products, productsTotalPrice } = useContext(CartContext)
+  // const { products, productsTotalPrice } = useContext(CartContext)
+
+  const { products } = useAppSelector((state) => state.cartReducer)
+  const productsTotalPrice = useAppSelector(selectProductsTotalPrice)
 
   const [isLoading, setIsLoading] = useState(false)
 
