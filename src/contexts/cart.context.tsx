@@ -15,9 +15,9 @@ interface ICartContext {
   toggleCart: () => void
   //  addProductToCart: (product: Product) => void
   // removeProductFromCart: (productId: string) => void
-  increaseProductQuantity: (productId: string) => void
-  decreaseProductQuantity: (productId: string) => void
-  clearProduct: () => void
+  // increaseProductQuantity: (productId: string) => void
+  // decreaseProductQuantity: (productId: string) => void
+  // clearProduct: () => void
 }
 interface ChildrenProps {
   // eslint-disable-next-line no-undef
@@ -30,11 +30,11 @@ export const CartContext = createContext<ICartContext>({
   toggleCart: () => {},
   // addProductToCart: () => {},
   // removeProductFromCart: () => {},
-  increaseProductQuantity: () => {},
-  decreaseProductQuantity: () => {},
+  // increaseProductQuantity: () => {},
+  // decreaseProductQuantity: () => {},
   productsTotalPrice: 0,
-  productsCart: 0,
-  clearProduct: () => {}
+  productsCart: 0
+  // clearProduct: () => {}
 })
 
 const CartContextProvider: FunctionComponent<ChildrenProps> = ({
@@ -98,7 +98,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
       products.filter((product) => product.id !== productId)
     )
   }
-  */
+  
   const increaseProductQuantity = (productId: string) => {
     setProducts((products) =>
       products.map((product) =>
@@ -108,6 +108,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
       )
     )
   }
+  
 
   const decreaseProductQuantity = (productId: string) => {
     setProducts((products) =>
@@ -122,7 +123,7 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
   const clearProduct = () => {
     setProducts([])
   }
-
+*/
   return (
     <CartContext.Provider
       value={{
@@ -131,11 +132,11 @@ const CartContextProvider: FunctionComponent<ChildrenProps> = ({
         toggleCart,
         // addProductToCart,
         // removeProductFromCart,
-        increaseProductQuantity,
-        decreaseProductQuantity,
+        // increaseProductQuantity,
+        // decreaseProductQuantity,
         productsTotalPrice,
-        productsCart,
-        clearProduct
+        productsCart
+        // clearProduct
       }}
     >
       {children}

@@ -3,7 +3,8 @@ const CartActionTypes = {
   addProductToCart: 'cart/addProduct',
   removeProductFromCart: 'cart/removeProduct',
   increaseProductQuantity: 'cart/increaseProductQuantity',
-  decreaseProductQuantity: 'cart/descreseProductQuantity'
+  decreaseProductQuantity: 'cart/descreseProductQuantity',
+  clearProducts: 'cart/clearProducts'
 }
 
 export default CartActionTypes

@@ -1,4 +1,3 @@
-
 import Product from '../../../types/products.types'
 import CartActionTypes from './cart.action-types'
 
@@ -24,4 +23,8 @@ export const increaseProductQuantity = (payload: string) => ({
 export const decreaseProductQuantity = (payload: string) => ({
   type: CartActionTypes.decreaseProductQuantity,
   payload
+})
+
+export const clearProducts = () => ({
+  type: CartActionTypes.clearProducts
 })
