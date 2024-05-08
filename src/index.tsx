@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+/*
+ UserContext API imports
+ 
 import UserContextProvider from './contexts/user.context'
 import CategoryContextProvider from './contexts/category.context'
 import CartContextProvider from './contexts/cart.context'
-
+*/
 import { Provider } from 'react-redux'
 import { persistedStore, store } from './store/store'
 // @ts-ignore
@@ -19,13 +22,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistedStore}>
-    <UserContextProvider>  
-      <CategoryContextProvider>
-        <CartContextProvider>
+
     <App /> 
-    </CartContextProvider>
-     </CategoryContextProvider> 
-    </UserContextProvider>
+
     </PersistGate>
     </Provider>
   </React.StrictMode>

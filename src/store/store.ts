@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage'
 import persistReducer from 'redux-persist/es/persistReducer'
 // @ts-ignore
 import persistStore from 'redux-persist/es/persistStore'
+import { thunk } from 'redux-thunk'
 
 const persistConfig = {
   key: 'root',
@@ -15,12 +16,15 @@ const persistConfig = {
   whitelist: ['cartReducer']
 }
 
-const persistedRootReducer: typeof rootReducer = persistReducer(persistConfig, rootReducer)
+const persistedRootReducer: typeof rootReducer = persistReducer(
+  persistConfig,
+  rootReducer
+)
 
 export const store = createStore(
   persistedRootReducer,
   undefined,
-  applyMiddleware(logger)
+  applyMiddleware(thunk, logger)
 )
 
 export const persistedStore = persistStore(store)
