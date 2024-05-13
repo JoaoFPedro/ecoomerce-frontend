@@ -15,7 +15,7 @@ import CheckOutPage from './pages/checkout/checkout.page'
 import Authentication from './guards/authenticaton.component'
 import PaymentConfirmation from './pages/payment-confirmation/payment-confirmation.page'
 import { useDispatch } from 'react-redux'
-import { logOutUser, loginUser } from './store/reducers/user/user.actions' // Importe UnknownAction
+import { logOutUser, loginUser } from './store/toolkit/user/user.slice' // Importe UnknownAction
 import { useAppSelector } from './hooks/redux.hook'
 
 /*

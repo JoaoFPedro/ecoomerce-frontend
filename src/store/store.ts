@@ -1,6 +1,7 @@
-import { legacy_createStore as createStore, applyMiddleware } from 'redux'
+
 import rootReducer from './root-reducers'
 import logger from 'redux-logger'
+import { Tuple, configureStore } from '@reduxjs/toolkit'
 
 // @ts-ignore
 import storage from 'redux-persist/lib/storage'
@@ -21,11 +22,16 @@ const persistedRootReducer: typeof rootReducer = persistReducer(
   rootReducer
 )
 
-export const store = createStore(
-  persistedRootReducer,
-  undefined,
-  applyMiddleware(thunk, logger)
-)
+// export const store = createStore(
+//   persistedRootReducer,
+//   undefined,
+//   applyMiddleware(thunk, logger)
+// )
+export const store = configureStore({
+  reducer: persistedRootReducer,
+  
+  middleware: () => new Tuple(thunk, logger)
+})
 
 export const persistedStore = persistStore(store)
 

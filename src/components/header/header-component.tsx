@@ -12,10 +12,11 @@ import { auth } from '../../config/firebase.config'
 
 
 import { useDispatch } from 'react-redux'
-import { logOutUser } from '../../store/reducers/user/user.actions'
+
 import { toggleCart } from '../../store/reducers/cart/cart.actions'
 import { useAppSelector } from '../../hooks/redux.hook'
 import { selectProductsCount } from '../../store/reducers/cart/cart.selector'
+import { logOutUser } from '../../store/toolkit/user/user.slice'
 
 const Header = () => {
   // const { isAuthenticated } = useContext(userContext)
