@@ -13,7 +13,8 @@ import {
 import CustomButton from '../../components/custom-button/custom-button.component'
 
 import { useDispatch } from 'react-redux'
-import { clearProducts } from '../../store/reducers/cart/cart.actions'
+import { clearProducts } from '../../store/toolkit/cart/cart.slice'
+
 
 const PaymentConfirmation: FunctionComponent = () => {
   // const { clearProduct } = useContext(CartContext)

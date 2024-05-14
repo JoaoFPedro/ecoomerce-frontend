@@ -15,9 +15,7 @@ import Loading from '../loading/loading.component'
 import { useAppSelector } from '../../hooks/redux.hook'
 import { selectProductsTotalPrice } from '../../store/reducers/cart/cart.selector'
 
-const CheckOut: FunctionComponent = () => {
-  // const { products, productsTotalPrice } = useContext(CartContext)
-
+const Checkout: FunctionComponent = () => {
   const { products } = useAppSelector((state) => state.cartReducer)
   const productsTotalPrice = useAppSelector(selectProductsTotalPrice)
 
@@ -26,6 +24,7 @@ const CheckOut: FunctionComponent = () => {
   const handleFinishPurchaseClick = async () => {
     try {
       setIsLoading(true)
+
       const { data } = await axios.post(
         `${process.env.REACT_APP_API_URL}/create-checkout-session`,
         {
@@ -40,12 +39,12 @@ const CheckOut: FunctionComponent = () => {
       setIsLoading(false)
     }
   }
+
   return (
     <>
       {isLoading && <Loading />}
-
       <CheckoutContainer>
-        <CheckoutTitle>CheckOut</CheckoutTitle>
+        <CheckoutTitle>Checkout</CheckoutTitle>
 
         {products.length > 0 ? (
           <>
@@ -55,23 +54,20 @@ const CheckOut: FunctionComponent = () => {
               ))}
             </CheckoutProducts>
 
-            <CheckoutTotal>
-              <p>R$ {productsTotalPrice}</p>
-            </CheckoutTotal>
+            <CheckoutTotal>Total: R${productsTotalPrice}</CheckoutTotal>
 
             <CustomButton
               startIcon={<BsBagCheck />}
-              onClick={handleFinishPurchaseClick}
-            >
+              onClick={handleFinishPurchaseClick}>
               Finalizar Compra
             </CustomButton>
           </>
         ) : (
-          <p> Seu carrinho esta vazio!</p>
+          <p>Seu carrinho está vazio!</p>
         )}
       </CheckoutContainer>
     </>
   )
 }
 
-export default CheckOut
+export default Checkout

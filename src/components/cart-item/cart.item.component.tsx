@@ -15,7 +15,7 @@ import {
   decreaseProductQuantity,
   increaseProductQuantity,
   removeProductFromCart
-} from '../../store/reducers/cart/cart.actions'
+} from '../../store/toolkit/cart/cart.slice'
 
 interface CartItemProps {
   product: CartProduct

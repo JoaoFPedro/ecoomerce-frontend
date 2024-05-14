@@ -11,12 +11,13 @@ import {
 import CartItem from '../cart-item/cart.item.component'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux.hook'
-import { toggleCart } from '../../store/reducers/cart/cart.actions'
+
 import { useDispatch } from 'react-redux'
 import {
   selectProductsCount,
   selectProductsTotalPrice
 } from '../../store/reducers/cart/cart.selector'
+import { toggleCart } from '../../store/toolkit/cart/cart.slice'
 
 const Cart = () => {
   /* const {
