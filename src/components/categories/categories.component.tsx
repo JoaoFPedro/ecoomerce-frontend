@@ -5,8 +5,9 @@ import CategoryItem from '../category-item/category-item.componente'
 import { CategoriesContainer, CategoryContent } from './categories.styles'
 
 import { useDispatch } from 'react-redux'
-import { fetchCategories } from '../../store/reducers/category/category.actions'
+
 import { useAppSelector } from '../../hooks/redux.hook'
+import { fetchCategories } from '../../store/toolkit/category/category.slice'
 
 
 const Categories = () => {
