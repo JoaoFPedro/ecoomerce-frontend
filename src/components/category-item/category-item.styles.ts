@@ -16,6 +16,10 @@ export const CategoryItemContainer = styled.div`
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: color;
+  
+  @media(max-width: 768px) {
+height: 250px;
+  }
 `
 export const CategoryName = styled.div`
   color: ${Colors.background.white};
