@@ -24,7 +24,7 @@ export const ProductsContainer = styled.div`
   @media(max-width: 768px) {
 flex-direction: column;
 display:flex;
-padding: 0px 40px 20px 20px;
+
 
 
   }
