@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../hooks/redux.hook'
 import { fetchCategories } from '../../store/toolkit/category/category.slice'
 
-
 const Categories = () => {
   // const { categories } = useContext(CategoryContext)
 
